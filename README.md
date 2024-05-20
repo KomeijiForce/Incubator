@@ -19,3 +19,11 @@ python incubate.py --n_epoch 16 \
     --classifier "roberta-base" \
     --save_path "roberta-base-incubated"
 ```
+
+By running the default incubation script, you can view the following output on default test cases:
+```
+Input: I love 'Spiderman 2'!
+Predicted Label: about movie
+Input: I ate a delicious pudding!
+Predicted Label: about food
+```

@@ -11,18 +11,35 @@ from collections import Counter
 
 from classifier import Classifier
 
-n_epoch = 16
-batch_size = 4
-device = 1
-n_sample = 16
-max_new_tokens = 64
-instruction = "Build a classifier that can categorize text messages by 'about food' and 'about movie'."
-model_id = "KomeijiForce/Incubator-llama-2-7b"
-classifier = "roberta-base"
-save_path = "roberta-base-incubated"
+import argparse
 
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16)
+parser = argparse.ArgumentParser(description='Parser for Incubator.')
+
+parser.add_argument('--n_epoch', type=int)
+parser.add_argument('--batch_size', type=int)
+parser.add_argument('--device', type=int)
+parser.add_argument('--n_sample', type=int)
+parser.add_argument('--max_new_tokens', type=int)
+parser.add_argument('--nli_finetune_epoch', type=int)
+parser.add_argument('--instruction', type=str)
+parser.add_argument('--incubator', type=str)
+parser.add_argument('--classifier', type=str)
+parser.add_argument('--save_path', type=str)
+
+args = parser.parse_args()
+
+n_epoch = args.n_epoch
+batch_size = args.batch_size
+device = args.device
+n_sample = args.n_sample
+max_new_tokens = args.max_new_tokens
+instruction = args.instruction
+incubator = args.incubator
+classifier = args.classifier
+save_path = args.save_path
+
+tokenizer = AutoTokenizer.from_pretrained(incubator)
+model = AutoModelForCausalLM.from_pretrained(incubator, torch_dtype=torch.float16)
 model = model.to(f"cuda:{device}")
 
 input_text = f"[INST] {instruction} [/INST]"

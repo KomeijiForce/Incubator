@@ -43,7 +43,7 @@ model = AutoModelForCausalLM.from_pretrained(incubator, torch_dtype=torch.float1
 model = model.to(f"cuda:{device}")
 
 input_text = f"[INST] {instruction} [/INST]"
-input_ids = tokenizer(input_text, return_tensors="pt").to("cuda:1")
+input_ids = tokenizer(input_text, return_tensors="pt").to(f"cuda:{device}")
 
 dataset = []
 
